@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J'Pard_Studio</title>
+  <style>
+    :root {
+      --dark-gray: #2e2e2e;
+      --light-gray: #b0b0b0;
+      --sky-blue: #74c0fc;
+      --yellow: #ffd43b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--dark-gray);
+      color: var(--light-gray);
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background-color: var(--dark-gray);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      color: var(--yellow);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    header p {
+      color: var(--sky-blue);
+      font-size: 1.2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 2rem;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel img {
+      max-height: 300px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .carousel img:hover {
+      transform: scale(1.05);
+    }
+
+    .portfolio {
+      padding: 2rem;
+    }
+
+    .portfolio h2 {
+      color: var(--yellow);
+    }
+
+    .services {
+      background-color: #3a3a3a;
+      padding: 2rem;
+      margin: 2rem;
+      border-radius: 12px;
+    }
+
+    .services h2 {
+      color: var(--sky-blue);
+    }
+
+    .services form label {
+      display: block;
+      margin: 0.5rem 0;
+    }
+
+    .services input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+
+    #total {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: var(--yellow);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: var(--light-gray);
+      border-top: 1px solid #444;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Reveal on Scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .carousel img {
+        max-height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>J'Pard_Studio</h1>
+    <p>Creative Agency Portfolio & Services</p>
+  </header>
+
+  <section class="carousel reveal">
+    <img src="https://jpard.myportfolio.com/images/0b709d79f62f4e7de34e7b18e034a45c.png" alt="Project 1" />
+    <img src="https://jpard.myportfolio.com/images/25ebea60a196874ac2347c2054c359fb.png" alt="Project 2" />
+    <img src="https://jpard.myportfolio.com/images/6e38323997fa1f4c2ad3f3cf8c79a37f.png" alt="Project 3" />
+    <img src="https://jpard.myportfolio.com/images/cc3c36e3ccdf63e6f74c3e75d7e6fc43.png" alt="Project 4" />
+  </section>
+
+  <section class="portfolio reveal">
+    <h2>Selected Works</h2>
+    <p>Browse some of our best projects, curated to show our range and creativity.</p>
+  </section>
+
+  <section class="services reveal">
+    <h2>Customize Your Service</h2>
+    <form id="service-form">
+      <label><input type="checkbox" name="branding" value="150" /> Branding - $150</label>
+      <label><input type="checkbox" name="graphic" value="120" /> Graphic Design - $120</label>
+      <label><input type="checkbox" name="social" value="100" /> Social Media - $100</label>
+      <label><input type="checkbox" name="motion" value="180" /> Motion Design - $180</label>
+      <label><input type="checkbox" name="web" value="200" /> Web Design - $200</label>
+    </form>
+    <p id="total">Total: $0</p>
+  </section>
+
+  <footer class="reveal">
+    &copy; 2025 J'Pard_Studio. All rights reserved.
+  </footer>
+
+  <script>
+    // Kalkulasi harga otomatis
+    const form = document.getElementById('service-form');
+    const totalDisplay = document.getElementById('total');
+
+    form.addEventListener('change', () => {
+      let total = 0;
+      const checkedBoxes = form.querySelectorAll('input[type="checkbox"]:checked');
+      checkedBoxes.forEach(box => {
+        total += parseInt(box.value);
+      });
+      totalDisplay.textContent = `Total: $${total}`;
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      reveals.forEach((el) => {
+        const elementTop = el.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
+</body>
+</html>
